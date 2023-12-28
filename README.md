@@ -3,29 +3,26 @@
 
 ## Install
 
+terminal 을 열고
 ```
-laravel new laravel
+git clone https://github.com/ssh521/laravel.git
 ```
+
+브랜치 선택
 ```
 cd laravel
+git branch -r
+git checkout -t  origin/breeze
 ```
+
+복사하기 .env.example into .env
 ```
-code .
+cp .env.example .env
 ```
+
+키 생성하기
 ```
-composer install
-```
-```
-npm install
-```
-```
-php artisan key:generate
-```
-```
-npm run build
-```
-```
-php artisan serve
+php artisan key:generate --ansi
 ```
 
 ## DB setting
