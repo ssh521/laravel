@@ -3,23 +3,21 @@
 
 ## Install
 
+terminal 을 열고
 ```
-laravel new laravel
-```
-```
-cd laravel
+git clone https://github.com/ssh521/laravel.git
 ```
 ```
-code .
+cp .env.example .env
+```
+```
+php artisan key:generate
 ```
 ```
 composer install
 ```
 ```
 npm install
-```
-```
-php artisan key:generate
 ```
 ```
 npm run build
@@ -30,7 +28,7 @@ php artisan serve
 
 ## DB setting
 
-mysql db 생성하기  
+mysql에 laraveldb 생성하기  
   
 .env 수정
 
