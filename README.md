@@ -1,11 +1,18 @@
 # laravel
- 라라벨 시작하기
+ 라라벨 시작하기 (Laravel Version v10.39.0)
 
 ## Install
 
 terminal 을 열고
 ```
 git clone https://github.com/ssh521/laravel.git
+```
+
+브랜치 선택
+```
+cd laravel
+git branch -r
+git checkout -t  origin/breeze
 ```
 ```
 cp .env.example .env
