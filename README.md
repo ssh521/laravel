@@ -45,5 +45,31 @@ mysql db 생성하기
 php artisan migrate
 ```
 
+# Awesome Laravel 책
 
+## Package 설치
 
+### 라라벨 디버그바 설치
+
+#### 설치
+```
+composer require barryvdh/laravel-debugbar
+```
+
+#### config/debugbar.php 생성하기
+
+```
+php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"
+```
+
+#### config/app.php 내용추가
+```
+    'providers' => [
+                Barryvdh\Debugbar\ServiceProvider::class,
+    ]
+
+    'aliases' => Facade::defaultAliases()->merge([
+        'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
+    ])->toArray(),
+
+```
