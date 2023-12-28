@@ -78,3 +78,28 @@ php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"
 ```
 php artisan db:seed
 ```
+
+### 다국어
+```
+php artisan lang:publish
+```
+#### config/app.php 수정
+    'locale' => 'ko',
+    'fallback_locale' => 'ko',
+
+
+#### package 설치
+```
+composer require laravel-lang/lang --dev
+```
+```
+composer require laravel-lang/publisher
+```
+```
+lang:publish
+```
+```
+php artisan lang:add ko
+```
+
+
