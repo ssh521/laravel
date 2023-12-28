@@ -45,5 +45,20 @@ mysql db 생성하기
 php artisan migrate
 ```
 
+## Starter Kits
+
+### Breeze & Blade
+```
+composer require laravel/breeze --dev
+```
+```
+php artisan breeze:install
+```
+```
+php artisan migrate
+npm install
+npm run dev
+```
+
 
 
