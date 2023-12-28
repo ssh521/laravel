@@ -73,3 +73,8 @@ php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"
     ])->toArray(),
 
 ```
+
+### User Seed
+```
+php artisan db:seed
+```
