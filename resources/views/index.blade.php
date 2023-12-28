@@ -1,9 +1,13 @@
 @extends('layouts.base')
 
-@section('title', '로그인')
+@section('title', 'Index')
 
 @section('content')
 
 Index.blade.php
+
+<div>
+    <a href="/content">content</a>
+</div>
 
 @endsection

@@ -18,3 +18,4 @@ Route::get('/', function () {
 });
 
 Route::view('index', 'index');
+Route::view('content', 'content');
