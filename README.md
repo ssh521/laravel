@@ -58,4 +58,27 @@ npm run dev
 ```
 
 
+### 다국어
+```
+php artisan lang:publish
+```
+
+#### config/app.php 수정
+    'locale' => 'ko',
+    'fallback_locale' => 'ko',
+
+
+#### package 설치
+```
+composer require laravel-lang/lang --dev
+```
+```
+composer require laravel-lang/publisher
+```
+```
+php artisan vendor:publish --provider="LaravelLang\Publisher\ServiceProvider"
+```
+```
+php artisan lang:add ko
+```
 
