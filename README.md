@@ -105,3 +105,7 @@ tailwind.config.js:
             require('flowbite/plugin')
         ],
     }
+
+resources/js/app.js
+
+    import 'flowbite';
