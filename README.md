@@ -13,20 +13,17 @@ git clone https://github.com/ssh521/laravel.git
 cp .env.example .env
 ```
 
+Package Download
+```
+composer install
+```
+
 키 생성하기
 ```
 php artisan key:generate --ansi
 ```
 
-```
-composer install
-```
-```
-npm install
-```
-```
-npm run build
-```
+서버 실행하기
 ```
 php artisan serve
 ```
