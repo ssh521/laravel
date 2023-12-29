@@ -28,4 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// livewire
+Route::get('/books', \App\Livewire\Books::class)->name('books');
+
 require __DIR__.'/auth.php';

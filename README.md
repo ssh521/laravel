@@ -57,5 +57,19 @@ npm install
 npm run dev
 ```
 
+### livewire3 
 
+[Install Guide](https://livewire.laravel.com/docs/installation)  
 
+```
+composer require livewire/livewire
+```
+
+```
+php artisan livewire:publish --config
+```
+
+##### Creating Book components
+```
+php artisan make:livewire Books
+```
