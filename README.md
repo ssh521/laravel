@@ -82,3 +82,26 @@ php artisan vendor:publish --provider="LaravelLang\Publisher\ServiceProvider"
 php artisan lang:add ko
 ```
 
+### Flowbite 설치
+> [Flowbite install guide](https://flowbite.com/docs/getting-started/laravel/)
+
+```
+npm install -D tailwindcss postcss autoprefixer flowbite
+```
+
+tailwind.config.js:
+
+    module.exports = {
+        content: [
+        "./resources/**/*.blade.php",
+        "./resources/**/*.js",
+        "./resources/**/*.vue",
+        "./node_modules/flowbite/**/*.js"
+        ],
+        theme: {
+        extend: {},
+        },
+        plugins: [
+            require('flowbite/plugin')
+        ],
+    }
