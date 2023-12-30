@@ -99,4 +99,21 @@ lang:publish
 php artisan lang:add ko
 ```
 
+### 라우터 추가
+```
+touch routes/auth.php
+php artisan route:list
+```
+
+### Password Rule
+```
+php artisan make:rule Password
+```
+
+### Session Table 생성
+```
+php artisan session:table
+
+php artisan migrate
+```
 
