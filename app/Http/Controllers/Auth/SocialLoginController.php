@@ -10,6 +10,8 @@ use Illuminate\Http\RedirectResponse;
 use Laravel\Socialite\Contracts\User as SocialiteUser;
 use Laravel\Socialite\Facades\Socialite;
 use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirectResponse;
+use Illuminate\Support\Facades\Hash;
+
 
 class SocialLoginController extends Controller
 {
@@ -26,7 +28,16 @@ class SocialLoginController extends Controller
      */
     public function store(Provider $provider): RedirectResponse
     {
+        // $socialUser = Socialite::driver($provider->value)->stateless()->user();
+
         $socialUser = Socialite::driver($provider->value)->user();
+        //dd($socialUser);
+        
+        if (!$socialUser)
+        {
+            return redirect('/error')->with('error', 'Bad credentials');
+        };
+
         $user = $this->register($socialUser);
 
         auth()->login($user);
@@ -45,8 +56,10 @@ class SocialLoginController extends Controller
             'email' => $socialUser->getEmail(),
         ], [
             'name' => $socialUser->getName(),
+            'password' => Hash::make($socialUser->getEmail()),
         ]);
 
+        // 메일로 회원가입를 커펌하는 경우..소셜을 인증된거로 업데이트 해준다.
         if ($user instanceof MustVerifyEmail && ! $user->hasVerifiedEmail()) {
             $user->markEmailAsVerified();
         }

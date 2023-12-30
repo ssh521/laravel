@@ -171,6 +171,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         App\Providers\PasswordServiceProvider::class,
+        App\Providers\SessionServiceProvider::class,
 
     ])->toArray(),
 
