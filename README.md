@@ -117,3 +117,12 @@ php artisan session:table
 php artisan migrate
 ```
 
+### Blog
+
+```
+php artisan make:model Blog --all
+```
+
+```
+php artisan vendor:publish --tag="laravel-pagination"
+```

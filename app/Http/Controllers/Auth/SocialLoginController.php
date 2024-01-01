@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
 use App\Enums\Provider;
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Http\RedirectResponse;
-use Laravel\Socialite\Contracts\User as SocialiteUser;
-use Laravel\Socialite\Facades\Socialite;
-use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirectResponse;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laravel\Socialite\Two\InvalidStateException;
+use Laravel\Socialite\Contracts\User as SocialiteUser;
+use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirectResponse;
 
 
 class SocialLoginController extends Controller
@@ -28,9 +29,15 @@ class SocialLoginController extends Controller
      */
     public function store(Provider $provider): RedirectResponse
     {
-        // $socialUser = Socialite::driver($provider->value)->stateless()->user();
+        
+        try {
+            $socialUser = Socialite::driver($provider->value)->user();
+        }
+        catch (InvalidStateException $e)
+        {
+            $socialUser = Socialite::driver($provider->value)->stateless()->user();
+        }
 
-        $socialUser = Socialite::driver($provider->value)->user();
         //dd($socialUser);
         
         if (!$socialUser)

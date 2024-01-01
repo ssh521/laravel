@@ -19,6 +19,9 @@
                     <li><a href="{{ route('register') }}">회원가입</a></li>
                 @else
                     <li><a href="{{ route('profile.show') }}">마이페이지</a></li>
+                    <li><a href="{{ route('dashboard.blogs') }}">대시보드</a></li>
+                    <li><a href="{{ route('blogs.index') }}">블로그리스트</a></li>
+                    <li><a href="{{ route('blogs.create') }}">블로그만들기</a></li>
                     <li>
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
