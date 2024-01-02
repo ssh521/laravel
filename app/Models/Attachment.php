@@ -18,9 +18,9 @@ class Attachment extends Model
         'name',
     ];
 
-    public function posts()
+    public function post(): BelongsTo
     {
-        return $this->BelongsTo(Post::class);
+        return $this->belongsTo(Post::class);
     }
 
 

@@ -13,14 +13,28 @@ use Illuminate\View\View;
 
 class PostController extends Controller
 {
-
     /**
      * PostController
      */
-    public function __construct()
+    public function __construct(private readonly PostService $postService)
     {
+        $this->authorizeResource(Post::class, 'post', [
+            'except' => ['create', 'store'],
+        ]);
 
-    }    
+        $this->middleware('can:create,App\Models\Post,blog')
+            ->only(['create', 'store']);
+    }
+
+    /**
+     * 글 목록
+     */
+    public function index(Blog $blog): View
+    {
+        return view('blogs.posts.index', [
+            'posts' => $blog->posts()->latest()->paginate(),
+        ]);
+    }
 
     /**
      * 글 쓰기 폼
@@ -37,25 +51,10 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request, Blog $blog): RedirectResponse
     {
-        //$post = $this->postService->store($request->validated(), $blog);
-
-        $post = $blog->posts->create($request->only(['title', 'content']));
-
-        $this->attachments($request, $post);
+        $post = $this->postService->store($request->validated(), $blog);
 
         return to_route('posts.show', $post);
     }
-    
-    /**
-     * 글 목록
-     */
-    public function index(Blog $blog): View
-    {
-        return view('blogs.posts.index', [
-            'posts' => $blog->posts()->latest()->paginate(),
-        ]);
-    }
-
 
     /**
      * 글 읽기
@@ -69,7 +68,7 @@ class PostController extends Controller
                 ->with(['user', 'replies.user'])
                 ->get(),
         ]);
-    }    
+    }
 
     /**
      * 글 수정 폼
@@ -81,13 +80,23 @@ class PostController extends Controller
         ]);
     }
 
-    public function attachments(Request $request, $post)
+    /**
+     * 글 수정
+     */
+    public function update(UpdatePostRequest $request, Post $post): RedirectResponse
     {
-        if ($request->hasFile('attachments'))
-        {
-            app(AttachmentController::class)->store($request, $post);
-        }
+        $this->postService->update($request->validated(), $post);
+
+        return to_route('posts.show', $post);
     }
 
+    /**
+     * 글 삭제
+     */
+    public function destroy(Post $post): RedirectResponse
+    {
+        $this->postService->destroy($post);
 
+        return to_route('blogs.posts.index', $post->blog);
+    }
 }

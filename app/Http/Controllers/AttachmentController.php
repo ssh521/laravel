@@ -5,72 +5,39 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAttachmentRequest;
 use App\Models\Attachment;
 use App\Models\Post;
-use Illuminate\Http\Request;
+use App\Services\AttachmentService;
+use Illuminate\Http\RedirectResponse;
 
 class AttachmentController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * AttachmentController
      */
-    public function index()
-    {
-        //
+    public function __construct(
+        private readonly AttachmentService $attachmentService
+    ) {
+        $this->authorizeResource(Attachment::class, 'attachment', [
+            'except' => ['store'],
+        ]);
+
+        $this->middleware('can:create,App\Models\Attachment,post')
+            ->only('store');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * 파일 생성
      */
-    public function create()
+    public function store(StoreAttachmentRequest $request, Post $post): void
     {
-        //
+        $this->attachmentService->store($request->validated(), $post);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 파일 삭제
      */
-    public function store(StoreAttachmentRequest $request, Post $post)
+    public function destroy(Attachment $attachment): RedirectResponse
     {
-        foreach($request->file('attachments') as $attachment)
-        {
-            $attachment->storePublicly('attachments', 'public');
-
-            $post->attachments->create([
-                'original_name' => $attachment->getClientOriginalName(),
-                'name' => $attachment->hasName('attachments')
-            ]
-        }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Attachment $attachment)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Attachment $attachment)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Attachment $attachment)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Attachment $attachment)
-    {
-        $attachment->delete();
+        $this->attachmentService->destroy($attachment);
 
         return back();
     }

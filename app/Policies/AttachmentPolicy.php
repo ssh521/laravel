@@ -2,10 +2,9 @@
 
 namespace App\Policies;
 
+use App\Models\Attachment;
 use App\Models\Post;
 use App\Models\User;
-use App\Models\Attachment;
-use Illuminate\Auth\Access\Response;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AttachmentPolicy

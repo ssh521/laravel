@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Blog;
-use Illuminate\View\View;
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
+use App\Models\Blog;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class BlogController extends Controller
 {
+    /**
+     * BlogController
+     */
     public function __construct()
     {
         $this->authorizeResource(Blog::class, 'blog');
@@ -26,18 +30,19 @@ class BlogController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * 블로그 생성 폼
      */
-    public function create()
+    public function create(): View
     {
         return view('blogs.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 블로그 생성
      */
-    public function store(StoreBlogRequest $request)
+    public function store(StoreBlogRequest $request): RedirectResponse
     {
+        /** @var \App\Models\User $user */
         $user = $request->user();
 
         $user->blogs()->create($request->validated());
@@ -46,10 +51,11 @@ class BlogController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * 블로그
      */
     public function show(Request $request, Blog $blog): View
     {
+        /** @var \App\Models\User $user */
         $user = $request->user();
 
         return view('blogs.show', [
@@ -61,9 +67,9 @@ class BlogController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * 블로그 수정 폼
      */
-    public function edit(Blog $blog)
+    public function edit(Blog $blog): View
     {
         return view('blogs.edit', [
             'blog' => $blog->load([
@@ -74,9 +80,9 @@ class BlogController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * 블로그 수정
      */
-    public function update(UpdateBlogRequest $request, Blog $blog)
+    public function update(UpdateBlogRequest $request, Blog $blog): RedirectResponse
     {
         $blog->update($request->validated());
 
@@ -84,9 +90,9 @@ class BlogController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 블로그 삭제
      */
-    public function destroy(Blog $blog)
+    public function destroy(Blog $blog): RedirectResponse
     {
         $blog->delete();
 

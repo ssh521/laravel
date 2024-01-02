@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Collections\BlogCollection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,6 +23,15 @@ class Blog extends Model
     public function getRouteKeyName(): string
     {
         return 'name';
+    }
+
+
+    /**
+     * Create a new Eloquent Collection instance.
+     */
+    public function newCollection(array $models = []): Collection
+    {
+        return new BlogCollection($models);
     }
 
     public function user(): BelongsTo
