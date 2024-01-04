@@ -126,3 +126,12 @@ php artisan make:model Blog --all
 ```
 php artisan vendor:publish --tag="laravel-pagination"
 ```
+
+### Flowbite
+
+```
+npm install -D tailwindcss postcss autoprefixer flowbite
+```
+```
+npx tailwindcss init -p
+```
