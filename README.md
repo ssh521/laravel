@@ -126,3 +126,21 @@ php artisan make:model Blog --all
 ```
 php artisan vendor:publish --tag="laravel-pagination"
 ```
+
+### tailwindcss v3.4.0 추가
+```
+npm install -D tailwindcss
+npx tailwindcss init
+```
+
+tailwindcss.config.js
+```
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["./src/**/*.{html,js}"],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
