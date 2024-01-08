@@ -66,6 +66,9 @@
                           <li>
                             <a href="{{ route('blogs.index') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">블로그 리스트</a>
                           </li>
+                          <li>
+                            <a href="{{ route('dashboard.tokens') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">tokens</a>
+                          </li>                          
                         </ul>
                         <div class="py-1">
                           <form action="{{ route('logout') }}" method="POST">

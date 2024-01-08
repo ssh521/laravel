@@ -14,5 +14,5 @@ Route::get('/subscriptions', \App\Http\Controllers\Dashboard\SubscriptionControl
 Route::get('/comments', \App\Http\Controllers\Dashboard\CommentController::class)
     ->name('comments');
 
-// Route::get('/tokens', \App\Http\Controllers\Dashboard\TokenController::class)
-//     ->name('tokens');
+Route::get('/tokens', \App\Http\Controllers\Dashboard\TokenController::class)
+    ->name('tokens');
