@@ -8,9 +8,6 @@ use Illuminate\View\View;
 
 class TokenController extends Controller
 {
-    /**
-     * 토큰 대시보드
-     */
     public function __invoke(Request $request): View
     {
         /** @var \App\Models\User $user */

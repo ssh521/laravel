@@ -38,9 +38,12 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/web.php'));
 
             // 메일확인된 인증된 사용자
-            Route::middleware(['web', 'auth', 'verified'])
-            ->group(base_path('routes/web.php'));        
+            //Route::middleware(['web', 'auth', 'verified'])
+            //->group(base_path('routes/web.php'));        
             
+            Route::middleware('web')
+                ->group(base_path('routes/auth.php'));
+
             Route::middleware(['web', 'auth', 'password.confirm'])
                 ->prefix('/dashboard')
                 ->name('dashboard.')

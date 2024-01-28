@@ -10,9 +10,9 @@ use Illuminate\Support\Arr;
 
 class PostService
 {
-    public function __construct(
-       private readonly AttachmentService $attachmentService
-    ) {
+    public function __construct(private readonly AttachmentService $attachmentService)
+    {
+        //
     }
 
     /**

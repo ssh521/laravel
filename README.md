@@ -135,3 +135,129 @@ npm install -D tailwindcss postcss autoprefixer flowbite
 ```
 npx tailwindcss init -p
 ```
+
+## sanctum
+```
+composer require laravel/sanctum
+```
+```
+php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+```
+### API 토큰 사용하기
+```
+class User extends Authenticatable
+{
+    use HasApiTokens;
+}
+```
+tokens(), tokenCan(), createToken()   
+
+### 토큰 생성 및 삭제하기
+```
+php artisan make:controller Auth\\TokenController -r
+```
+```
+Route::resource('tokens', \App\Http\Controllers\Auth\TokenController::class)
+    ->only(['create', 'store', 'destroy']);
+```
+
+### 권한 구분하기
+```
+touch app/Enums/Ability.php
+```
+```
+namespace App\Enums;
+
+enum Ability: string
+{
+    case POST_CREATE = 'post:create';
+    case POST_READ = 'post:read';
+    case POST_UPDATE = 'post:update';
+    case POST_DELETE = 'post:delete';
+}
+```
+```
+class TokenController extends Controller
+{
+    public function create(): View
+    {
+        return view('tokens.create', [
+            'abilities' => Ability::cases(),
+        ]);
+    }
+}
+```
+```
+php artisan make:request StoreTokenRequest
+```
+```
+namespace App\Http\Requests;
+
+use App\Enums\Ability;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
+
+class StoreTokenRequest extends FormRequest
+{
+    public function rules(): array
+    {
+        return [
+            'name' => 'required|string',
+            'abilities.*' => [new Enum(Ability::class)],
+        ];
+    }
+}
+```
+```
+public function store(StoreTokenRequest $request): RedirectResponse
+{
+    $user = $request->user();
+    $token = $user->createToken($request->name, $request->abilities);
+    return back()
+        ->with('status', $token->plainTextToken);
+}
+```
+```
+// Auth/TokenController
+
+public function destroy(Request $request, PersonalAccessToken $token): RedirectResponse
+{
+    $user = $request->user();
+    $user->tokens()->where('id', $token->id)->delete();
+    return back();
+}
+```
+```
+//namespace App\Http\Controllers\Dashboard;
+
+class TokenController extends Controller
+{
+    public function __invoke(Request $request): View
+    {
+        $user = $request->user();
+        return view('dashboard.tokens', [
+            'tokens' => $user->tokens,
+        ]);
+    }
+}
+```
+```
+    <ul>
+        @foreach ($tokens as $token)
+            <li>
+                <strong>{{ $token->name }}</strong>
+
+                @foreach ($token->abilities as $ability)
+                    <span>{{ $ability }}</span>
+                @endforeach
+
+                <form action="{{ route('tokens.destroy', $token) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+
+                    <button type="submit">토큰 삭제</button>
+                </form>
+            </li>
+        @endforeach
+    </ul>
+```
