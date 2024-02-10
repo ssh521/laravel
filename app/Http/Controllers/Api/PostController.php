@@ -36,8 +36,8 @@ class PostController extends Controller
     {
         $posts = $blog->posts()
            ->latest()
-           ->get();
-           //->paginate(5);
+           //->get();
+           ->paginate(5);
 
         //return $posts;
         return new PostCollection($posts);
